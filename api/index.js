@@ -6,7 +6,7 @@ const model = require('./sdk/model.js');
 
 // Bot Setting
 const TelegramBot = require('node-telegram-bot-api');
-const token = '1816981987:AAFp5TJoK4RGCPpBFfH53ke15EGfINpPkBk'
+const token = '1776976042:AAHyR8gRC_hXZKG-RRI3iWFPV4pOWR_kJBE'
 const bot = new TelegramBot(token, {polling: true});
 
 
@@ -14,8 +14,10 @@ const bot = new TelegramBot(token, {polling: true});
 bot.onText(/\/start/, (msg) => { 
     bot.sendMessage(
         msg.chat.id,
-        `hello Adythia Rizky Taufik (41419120052), welcome...\n
-        click /predict`
+        `UAS JARINGAN SYARAF TIRUAN\n
+	 NAMA : Adythia Rizky Taufik \n
+	 NIM  : 41419120052 \n 
+         click /predict`
     );   
 });
 
@@ -24,7 +26,7 @@ state =0;
 bot.onText(/\/predict/, (msg) => { 
     bot.sendMessage(
         msg.chat.id,
-        `Masukan nilai X1|X2|X3 contohnya 51|10|102`
+        `Masukan nilai X1|X2|X3 contohnya 52|20|102 \n`
     );   
 	state = 1;
 });
@@ -44,17 +46,18 @@ bot.on('message',(msg) => {
 	).then((jres)=>{
 	    bot.sendMessage(
 	       msg.chat.id,
-		`nilai Y1 yang diprediksi adalah ${jres[0]} degree`
+		`nilai Y1 yang diprediksi adalah ${jres[0]} `
 	        
 	    );  
             bot.sendMessage(
 		msg.chat.id,
-		`nilai Y2 yang diprediksi adalah ${jres[1]} degree`
+		`nilai Y2 yang diprediksi adalah ${jres[1]} `
 	    );
 	    bot.sendMessage(
 		msg.chat.id,
-		`nilai Y3 yang diprediksi adalah ${jres[2]} degree`
+		`nilai Y3 yang diprediksi adalah ${jres[2]} `
 	    );
+	    state = 0;
       })               
     }else{
         state = 0
