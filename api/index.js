@@ -24,7 +24,7 @@ state =0;
 bot.onText(/\/predict/, (msg) => { 
     bot.sendMessage(
         msg.chat.id,
-        `Masukan nilai X1|X2|X3 contohnya 9|9|9`
+        `Masukan nilai X1|X2|X3 contohnya 51|10|102`
     );   
 	state = 1;
 });
@@ -32,9 +32,6 @@ bot.onText(/\/predict/, (msg) => {
 bot.on('message', (msg) => {
 	if(state == 1){
 		s = msg.text.split("|");
-		x1 = s[0]
-        	x2 = s[1]
-		x3 = s[2]
 		model.predict(
 			[
 				parseFloat(s[0]),
