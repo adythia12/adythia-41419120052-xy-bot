@@ -3,11 +3,10 @@ var r = express.Router();
 
 // load pre-trained model
 const model = require('./sdk/model.js');
-const cls_model = require('./sdk/cls_model.js');
 
 // Bot Setting
 const TelegramBot = require('node-telegram-bot-api');
-const token = '1871909542:AAE6OTSe6nt1hzvzZFZGxL5GC-vOzzUlUNU'
+const token = '1816981987:AAFp5TJoK4RGCPpBFfH53ke15EGfINpPkBk'
 const bot = new TelegramBot(token, {polling: true});
 
 state =0;
@@ -15,7 +14,7 @@ state =0;
 bot.onText(/\/start/, (msg) => { 
     bot.sendMessage(
         msg.chat.id,
-        `hello ${msg.chat.first_name}, welcome...\n
+        `hello Adythia Rizky Taufik (41419120052), welcome...\n
         click /predict`
     );   
 	state = 0;
@@ -25,7 +24,7 @@ bot.onText(/\/start/, (msg) => {
 bot.onText(/\/predict/, (msg) => { 
     bot.sendMessage(
         msg.chat.id,
-        `Masukan nilai i|v contohnya 9|9`
+        `Masukan nilai X1|X2|X3 contohnya 9|9|9`
     );   
 	state = 1;
 });
@@ -33,15 +32,16 @@ bot.onText(/\/predict/, (msg) => {
 bot.on('message', (msg) => {
 	if(state == 1){
 		s = msg.text.split("|");
+		x1 = s[0]
+        	x2 = s[1]
+		x3 = s[2]
 		model.predict(
 			[
 				parseFloat(s[0]),
-				parseFloat(s[1])
+				parseFloat(s[1]),
+				parseFloat(s[2])
 			]
 		).then((jres1)=>{
-			console.log(jres1);
-			
-			cls_model.classify([parseFloat(s[0]), parseFloat(s[1]), parseFloat(jres1[0]), parseFloat(jres1[1])]).then((jres2)=>{
 				bot.sendMessage(
 					msg.chat.id,
 					`nilai v yang diprediksi adalah  ${jres1[0]} volt`
@@ -50,10 +50,7 @@ bot.on('message', (msg) => {
 					msg.chat.id,
 					`nilai p yang diprediksi adalah  ${jres1[1]} watt`
 				);
-				bot.sendMessage(
-					msg.chat.id,
-					`klassifikasi Tegangan ${jres2}`
-				);
+
 				state = 0;
 			})
 		})
@@ -67,36 +64,17 @@ bot.on('message', (msg) => {
 })
 
 // routers
-r.get('/predict/:i/:r', function(req, res, next) {    
+r.get('/predict/:x1/:x2:x3', function(req, res, next) {    
     model.predict(
         [
-            parseFloat(req.params.i), // string to float
-            parseFloat(req.params.r)
+            parseFloat(req.params.x1), // string to float
+            parseFloat(req.params.x2),
+	    parseFloat(req.params.x3)	
         ]
 	).then((jres)=>{
 		res.json(jres);
 	})
 });
 	
-// routers
-r.get('/classify/:i/:r', function(req, res, next) {    
-    model.predict(
-        [
-            parseFloat(req.params.i), // string to float
-            parseFloat(req.params.r)
-        ]
-    ).then((jres)=>{
-		cls_model.classify(
-			[
-				parseFloat(req.params.i),
-				parseFloat(req.params.r),
-				parseFloat(jres[0]),
-				parseFloat(jres[1])
-			]
-		).then((jres_)=>{
-			res.json({jres,jres_})
-		})
-	})
-});
 
 module.exports = r;
