@@ -9,7 +9,7 @@ const TelegramBot = require('node-telegram-bot-api');
 const token = '1816981987:AAFp5TJoK4RGCPpBFfH53ke15EGfINpPkBk'
 const bot = new TelegramBot(token, {polling: true});
 
-state =0;
+
 // Main Menu Bot
 bot.onText(/\/start/, (msg) => { 
     bot.sendMessage(
@@ -17,9 +17,9 @@ bot.onText(/\/start/, (msg) => {
         `hello Adythia Rizky Taufik (41419120052), welcome...\n
         click /predict`
     );   
-	state = 0;
 });
 
+state =0;
 // input requires i and r 
 bot.onText(/\/predict/, (msg) => { 
     bot.sendMessage(
