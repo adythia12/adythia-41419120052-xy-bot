@@ -56,17 +56,11 @@ bot.on('message', (msg) => {
 					`nilai Y3 yang diprediksi adalah ${jres[2]} `
 	   		 );
 
-				state = 0;
-			})
 		})
 	}else{
-		bot.sendMessage(
-		msg.chat.id,
-			`Please Click /start`
-		);
 		state = 0;
 	}
-})
+});
 
 // routers
 r.get('/prediction/:x1/:y1:z1', function(req, res, next) {    
