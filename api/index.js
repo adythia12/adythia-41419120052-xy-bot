@@ -39,19 +39,18 @@ bot.on('message', (msg) => {
 				parseFloat(s[2])
 			]
 		).then((jres1)=>{
-	   	 	bot.sendMessage(
-	       			msg.chat.id,
-					`nilai Y1 yang diprediksi adalah ${jres[0]} `
-	        
-	    		);  
-           		 bot.sendMessage(
-				msg.chat.id,
-					`nilai Y2 yang diprediksi adalah ${jres[1]} `
-	    		);
-	   		 bot.sendMessage(
-				msg.chat.id,
-					`nilai Y3 yang diprediksi adalah ${jres[2]} `
-	   		 );
+	   	   bot.sendMessage(
+	       	     msg.chat.id,
+			`nilai Y1 yang diprediksi adalah ${jres[0]} `	
+	    	);  
+	           bot.sendMessage(
+		     msg.chat.id,
+		        `nilai Y2 yang diprediksi adalah ${jres[1]} `
+	    	);
+	           bot.sendMessage(
+		     msg.chat.id,
+		         `nilai Y3 yang diprediksi adalah ${jres[2]} `
+	 	);
 
 		})
 	}else{
@@ -60,7 +59,7 @@ bot.on('message', (msg) => {
 });
 
 // routers
-r.get('/prediction/:x1/:y1:z1', function(req, res, next) {    
+r.get('/prediction/:x1/:x2:x3', function(req, res, next) {    
     model.predict(
         [
             parseFloat(req.params.x1), // string to float
