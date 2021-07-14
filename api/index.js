@@ -32,6 +32,9 @@ bot.onText(/\/predict/, (msg) => {
 bot.on('message', (msg) => {
 	if(state == 1){
 		s = msg.text.split("|");
+		x1 = s[0]
+        	x2 = s[1]
+		x3 = s[2]
 		model.predict(
 			[
 				parseFloat(s[0]),
@@ -39,18 +42,19 @@ bot.on('message', (msg) => {
 				parseFloat(s[2])
 			]
 		).then((jres1)=>{
-				bot.sendMessage(
-					msg.chat.id,
-					`nilai Y1 yang diprediksi adalah  ${jres1[0]} `
-				);										
-				bot.sendMessage(
-					msg.chat.id,
-					`nilai Y2 yang diprediksi adalah  ${jres1[1]} `
-				);
-				bot.sendMessage(
-					msg.chat.id,
-					`nilai Y3 yang diprediksi adalah  ${jres1[2]} `
-				);
+	   	 	bot.sendMessage(
+	       			msg.chat.id,
+					`nilai Y1 yang diprediksi adalah ${jres[0]} `
+	        
+	    		);  
+           		 bot.sendMessage(
+				msg.chat.id,
+					`nilai Y2 yang diprediksi adalah ${jres[1]} `
+	    		);
+	   		 bot.sendMessage(
+				msg.chat.id,
+					`nilai Y3 yang diprediksi adalah ${jres[2]} `
+	   		 );
 
 				state = 0;
 			})
@@ -65,7 +69,7 @@ bot.on('message', (msg) => {
 })
 
 // routers
-r.get('/prediction/:i/:r', function(req, res, next) {    
+r.get('/prediction/:x1/:y1:z1', function(req, res, next) {    
     model.predict(
         [
             parseFloat(req.params.x1), // string to float
