@@ -29,36 +29,36 @@ bot.onText(/\/predict/, (msg) => {
 	state = 1;
 });
 
-bot.on('message', (msg) => {
-	if(state == 1){
-	   	s = msg.text.split("|");
-	   	x1 = s[0]
-           	x2 = s[1]
-	  	x3 = s[2]
-		model.predict(
-			[
-				parseFloat(s[0]),
-				parseFloat(s[1]),
-				parseFloat(s[2])
-			]
-		).then((jres1)=>{
-	   	   bot.sendMessage(
-	       	     msg.chat.id,
-			`nilai Y1 yang diprediksi adalah ${jres[0]} `	
-	    	);  
-	           bot.sendMessage(
-		     msg.chat.id,
-		        `nilai Y2 yang diprediksi adalah ${jres[1]} `
-	    	);
-	           bot.sendMessage(
-		     msg.chat.id,
-		         `nilai Y3 yang diprediksi adalah ${jres[2]} `
-	 	);
-
-		})
-	}else{
-		state = 0;
-	}
+bot.on('message',(msg) => {
+    if(state == 1){
+        s =msg.text.split("|");
+        x1 = s[0]
+        x2 = s[1]
+	x3 = s[2]
+	model.predict(
+	   [
+             parseFloat(s[0]), // string to float
+             parseFloat(s[1]),
+	     parseFloat(s[2])
+	   ]
+	).then((jres)=>{
+	    bot.sendMessage(
+	       msg.chat.id,
+		`nilai Y1 yang diprediksi adalah ${jres[0]} degree`
+	        
+	    );  
+            bot.sendMessage(
+		msg.chat.id,
+		`nilai Y2 yang diprediksi adalah ${jres[1]} degree`
+	    );
+	    bot.sendMessage(
+		msg.chat.id,
+		`nilai Y3 yang diprediksi adalah ${jres[2]} degree`
+	    );
+      })               
+    }else{
+        state = 0
+    }
 });
 
 // routers
@@ -69,9 +69,9 @@ r.get('/prediction/:x1/:x2:x3', function(req, res, next) {
             parseFloat(req.params.x2),
 	    parseFloat(req.params.x3)	
         ]
-	).then((jres)=>{
-		res.json(jres);
-	})
+    ).then((jres)=>{
+	res.json(jres);
+    })
 });
 	
 
